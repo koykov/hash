@@ -26,7 +26,7 @@ var (
 	_ = Hash64aStringLong
 )
 
-// Fast FNV-1 32 hash calculation.
+// Hash32 calculates FNV-1 32 hash fast.
 func Hash32(p []byte) uint32 {
 	h := offset32
 	for _, c := range p {
@@ -36,7 +36,7 @@ func Hash32(p []byte) uint32 {
 	return h
 }
 
-// Loop rolled version of FNV-1 32 for very long input.
+// Hash32Long is a loop rolled version of FNV-1 32 for very long input.
 func Hash32Long(p []byte) uint32 {
 	h := offset32
 
@@ -88,17 +88,17 @@ func Hash32Long(p []byte) uint32 {
 	return h
 }
 
-// Fast FNV-1 32 hash calculation of string.
+// Hash32String calculates FNV-1 32 hash of string.
 func Hash32String(s string) uint32 {
 	return Hash32(s2b(s))
 }
 
-// Loop rolled version of FNV-1 32 for very long strings.
+// Hash32StringLong is a loop rolled version of FNV-1 32 for very long strings.
 func Hash32StringLong(s string) uint32 {
 	return Hash32Long(s2b(s))
 }
 
-// Fast FNV-1a 32 hash calculation.
+// Hash32a calculates FNV-1a 32 hash fast.
 func Hash32a(p []byte) uint32 {
 	h := offset32
 	for _, c := range p {
@@ -107,7 +107,7 @@ func Hash32a(p []byte) uint32 {
 	return h
 }
 
-// Loop rolled version of FNV-1a 32 for very long input.
+// Hash32aLong is a loop rolled version of FNV-1a 32 for very long input.
 func Hash32aLong(p []byte) uint32 {
 	h := offset32
 
@@ -144,17 +144,17 @@ func Hash32aLong(p []byte) uint32 {
 	return h
 }
 
-// Fast FNV-1a 32 hash calculation of string.
+// Hash32aString calculates FNV-1a 32 hash of string.
 func Hash32aString(s string) uint32 {
 	return Hash32a(s2b(s))
 }
 
-// Loop rolled FNV-1a 32 for very long strings.
+// Hash32aStringLong is a loop rolled FNV-1a 32 for very long strings.
 func Hash32aStringLong(s string) uint32 {
 	return Hash32aLong(s2b(s))
 }
 
-// Fast FNV-1 64 hash calculation.
+// Hash64 calculates FNV-1 64 hash fast.
 func Hash64(p []byte) uint64 {
 	h := offset64
 	for _, c := range p {
@@ -164,7 +164,7 @@ func Hash64(p []byte) uint64 {
 	return h
 }
 
-// Loop rolled version of FNV-1 64 for very long input.
+// Hash64Long is a loop rolled version of FNV-1 64 for very long input.
 func Hash64Long(p []byte) uint64 {
 	h := offset64
 
@@ -216,17 +216,17 @@ func Hash64Long(p []byte) uint64 {
 	return h
 }
 
-// Fast FNV-1 64 hash calculation of string.
+// Hash64String calculates FNV-1 64 hash of string.
 func Hash64String(s string) uint64 {
 	return Hash64(s2b(s))
 }
 
-// Loop rolled version of FNV-1 64 for very long strings.
+// Hash64StringLong is a loop rolled version of FNV-1 64 for very long strings.
 func Hash64StringLong(s string) uint64 {
 	return Hash64Long(s2b(s))
 }
 
-// Fast FNV-1a 64 hash calculation.
+// Hash64a calculates FNV-1a 64 hash fast.
 func Hash64a(p []byte) uint64 {
 	h := offset64
 	for _, c := range p {
@@ -235,7 +235,7 @@ func Hash64a(p []byte) uint64 {
 	return h
 }
 
-// Loop rolled version of FNV-1a 64 for very long input.
+// Hash64aLong is a loop rolled version of FNV-1a 64 for very long input.
 func Hash64aLong(p []byte) uint64 {
 	h := offset64
 
@@ -272,12 +272,12 @@ func Hash64aLong(p []byte) uint64 {
 	return h
 }
 
-// Fast FNV-1a 64 hash calculation of string.
+// Hash64aString calculates FNV-1a 64 hash of string.
 func Hash64aString(s string) uint64 {
 	return Hash64a(s2b(s))
 }
 
-// Loop rolled version of FNV-1a 64 for very long strings.
+// Hash64aStringLong is a loop rolled version of FNV-1a 64 for very long strings.
 func Hash64aStringLong(s string) uint64 {
 	return Hash64aLong(s2b(s))
 }
