@@ -4,7 +4,6 @@ import "testing"
 
 var stages = []struct {
 	data  string
-	pdata []byte
 	seed  uint32
 	hash  uint32
 	hashA uint32
@@ -35,17 +34,11 @@ var stages = []struct {
 	},
 }
 
-func init() {
-	for i := 0; i < len(stages); i++ {
-		stages[i].pdata = []byte(stages[i].data)
-	}
-}
-
 func TestHash(t *testing.T) {
 	for i := 0; i < len(stages); i++ {
-		stage := stages[i]
+		stage := &stages[i]
 		t.Run("", func(t *testing.T) {
-			result := Hash(stage.pdata, stage.seed)
+			result := Hash(stage.data, stage.seed)
 			if result != stage.hash {
 				t.Errorf("Hash(%s, %d) = %d, want %d", stage.data, stage.seed, result, stage.hash)
 			}
@@ -55,9 +48,9 @@ func TestHash(t *testing.T) {
 
 func TestHashAligned(t *testing.T) {
 	for i := 0; i < len(stages); i++ {
-		stage := stages[i]
+		stage := &stages[i]
 		t.Run("", func(t *testing.T) {
-			result := HashAligned(stage.pdata, stage.seed)
+			result := HashAligned(stage.data, stage.seed)
 			if result != stage.hashA {
 				t.Errorf("HashAligned(%s, %d) = %d, want %d", stage.data, stage.seed, result, stage.hash)
 			}
@@ -68,15 +61,15 @@ func TestHashAligned(t *testing.T) {
 func BenchmarkHash(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		stage := stages[b.N%len(stages)]
-		Hash(stage.pdata, stage.seed)
+		stage := &stages[b.N%len(stages)]
+		Hash(stage.data, stage.seed)
 	}
 }
 
 func BenchmarkHashAligned(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		stage := stages[b.N%len(stages)]
-		HashAligned(stage.pdata, stage.seed)
+		stage := &stages[b.N%len(stages)]
+		HashAligned(stage.data, stage.seed)
 	}
 }
