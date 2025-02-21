@@ -11,7 +11,7 @@ var stages = []struct {
 	hash64B uint64
 	hash2A  uint32
 	hashN2  uint32
-	hashA2  uint32
+	hashA   uint32
 }{
 	{
 		data:    "foo",
@@ -21,7 +21,7 @@ var stages = []struct {
 		hash64B: 5484325262697493828,
 		hash2A:  2221687037,
 		hashN2:  1532637697,
-		hashA2:  1532637697,
+		hashA:   1532637697,
 	},
 	{
 		data:    "foobar",
@@ -31,7 +31,7 @@ var stages = []struct {
 		hash64B: 4480287663481255131,
 		hash2A:  362873721,
 		hashN2:  151733797,
-		hashA2:  151733797,
+		hashA:   151733797,
 	},
 	{
 		data:    "The quick brown fox jumps over the lazy dog",
@@ -41,7 +41,7 @@ var stages = []struct {
 		hash64B: 8470663747738974033,
 		hash2A:  3814933764,
 		hashN2:  495243318,
-		hashA2:  495243318,
+		hashA:   495243318,
 	},
 	{
 		data:    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget risus vitae est sagittis euismod. Integer id nibh ut ligula aliquam sagittis.",
@@ -51,7 +51,7 @@ var stages = []struct {
 		hash64B: 1345853299853536290,
 		hash2A:  507073689,
 		hashN2:  2279665421,
-		hashA2:  2279665421,
+		hashA:   2279665421,
 	},
 }
 
@@ -115,13 +115,13 @@ func TestHashNeutral2(t *testing.T) {
 	}
 }
 
-func TestHashAligned2(t *testing.T) {
+func TestHashAligned(t *testing.T) {
 	for i := 0; i < len(stages); i++ {
 		stage := &stages[i]
 		t.Run("", func(t *testing.T) {
-			hash := HashAligned2(stage.data, stage.seed)
-			if hash != stage.hashA2 {
-				t.Errorf("HashAligned2(%s, %d) = %d, want %d", stage.data, stage.seed, hash, stage.hashA2)
+			hash := HashAligned(stage.data, stage.seed)
+			if hash != stage.hashA {
+				t.Errorf("HashAligned(%s, %d) = %d, want %d", stage.data, stage.seed, hash, stage.hashA)
 			}
 		})
 	}
@@ -167,10 +167,10 @@ func BenchmarkHashNeutral2(b *testing.B) {
 	}
 }
 
-func BenchmarkHashAligned2(b *testing.B) {
+func BenchmarkHashAligned(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
 		stage := &stages[b.N%len(stages)]
-		HashAligned2(stage.data, stage.seed)
+		HashAligned(stage.data, stage.seed)
 	}
 }

@@ -242,7 +242,7 @@ func HashNeutral2[T byteseq](p T, seed uint32) (h uint32) {
 	return
 }
 
-func HashAligned2[T byteseq](p T, seed uint32) (h uint32) {
+func HashAligned[T byteseq](p T, seed uint32) (h uint32) {
 	const r = 24
 
 	ul := uint32(len(p))
