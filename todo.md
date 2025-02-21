@@ -3,5 +3,5 @@ Implement:
 * * [-] SIMD version
 * [*] [MetroHash](https://github.com/jandrewrogers/MetroHash) 
 * * [-] SIMD version
-* [-] [xxHash](https://github.com/Cyan4973/xxHash) 
+* [+] [xxHash](https://github.com/Cyan4973/xxHash) 
 * * [-] SIMD version
