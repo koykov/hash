@@ -89,7 +89,7 @@ func TestHash64a(t *testing.T) {
 
 func BenchmarkHash32(b *testing.B) {
 	b.ReportAllocs()
-	var h Hasher[string]
+	var h Hasher32[string]
 	for i := 0; i < b.N; i++ {
 		stage := &stages[b.N%len(stages)]
 		h.Sum32(stage.data)
@@ -98,16 +98,16 @@ func BenchmarkHash32(b *testing.B) {
 
 func BenchmarkHash32a(b *testing.B) {
 	b.ReportAllocs()
-	var h Hasher[string]
+	var h Hasher32a[string]
 	for i := 0; i < b.N; i++ {
 		stage := &stages[b.N%len(stages)]
-		h.Sum32a(stage.data)
+		h.Sum32(stage.data)
 	}
 }
 
 func BenchmarkHash64(b *testing.B) {
 	b.ReportAllocs()
-	var h Hasher[string]
+	var h Hasher64[string]
 	for i := 0; i < b.N; i++ {
 		stage := &stages[b.N%len(stages)]
 		h.Sum64(stage.data)
@@ -116,9 +116,9 @@ func BenchmarkHash64(b *testing.B) {
 
 func BenchmarkHash64a(b *testing.B) {
 	b.ReportAllocs()
-	var h Hasher[string]
+	var h Hasher64a[string]
 	for i := 0; i < b.N; i++ {
 		stage := &stages[b.N%len(stages)]
-		h.Sum64a(stage.data)
+		h.Sum64(stage.data)
 	}
 }
