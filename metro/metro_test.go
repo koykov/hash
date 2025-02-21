@@ -2,36 +2,45 @@ package metro
 
 import "testing"
 
-var stages = []struct {
-	data    string
-	seed    uint64
-	hash64  uint64
-	hash128 [2]uint64
-}{
-	{
-		data:    "foo",
-		seed:    0x12345678,
-		hash64:  2380772528196146020,
-		hash128: [2]uint64{17949631740792705275, 8991474027653484836},
-	},
-	{
-		data:    "foobar",
-		seed:    0x12345678,
-		hash64:  5426739015579503264,
-		hash128: [2]uint64{3972895474774536955, 18246469663299570930},
-	},
-	{
-		data:    "The quick brown fox jumps over the lazy dog",
-		seed:    0x12345678,
-		hash64:  3210435738747958464,
-		hash128: [2]uint64{10519808379090762444, 395168348050836046},
-	},
-	{
-		data:    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget risus vitae est sagittis euismod. Integer id nibh ut ligula aliquam sagittis.",
-		seed:    0x12345678,
-		hash64:  13537174898478009123,
-		hash128: [2]uint64{6001879636519351909, 15368227032245481045},
-	},
+var (
+	stages = []struct {
+		data    string
+		seed    uint64
+		hash64  uint64
+		hash128 [2]uint64
+	}{
+		{
+			data:    "foo",
+			seed:    0x12345678,
+			hash64:  2380772528196146020,
+			hash128: [2]uint64{17949631740792705275, 8991474027653484836},
+		},
+		{
+			data:    "foobar",
+			seed:    0x12345678,
+			hash64:  5426739015579503264,
+			hash128: [2]uint64{3972895474774536955, 18246469663299570930},
+		},
+		{
+			data:    "The quick brown fox jumps over the lazy dog",
+			seed:    0x12345678,
+			hash64:  3210435738747958464,
+			hash128: [2]uint64{10519808379090762444, 395168348050836046},
+		},
+		{
+			data:    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget risus vitae est sagittis euismod. Integer id nibh ut ligula aliquam sagittis.",
+			seed:    0x12345678,
+			hash64:  13537174898478009123,
+			hash128: [2]uint64{6001879636519351909, 15368227032245481045},
+		},
+	}
+	total int64
+)
+
+func init() {
+	for i := 0; i < len(stages); i++ {
+		total += int64(len(stages[i].data))
+	}
 }
 
 func equal128(a, b [2]uint64) bool {
@@ -64,6 +73,7 @@ func TestHash128(t *testing.T) {
 
 func BenchmarkHash64(b *testing.B) {
 	b.ReportAllocs()
+	b.SetBytes(total)
 	for i := 0; i < b.N; i++ {
 		stage := &stages[b.N%len(stages)]
 		Hash64(stage.data, stage.seed)
@@ -72,6 +82,7 @@ func BenchmarkHash64(b *testing.B) {
 
 func BenchmarkHash128(b *testing.B) {
 	b.ReportAllocs()
+	b.SetBytes(total)
 	for i := 0; i < b.N; i++ {
 		stage := &stages[b.N%len(stages)]
 		Hash64(stage.data, stage.seed)
