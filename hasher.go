@@ -1,27 +1,27 @@
 package hash
 
+type byteseq interface {
+	~[]byte | ~string
+}
+
 // Hasher is a shorthand alias of Hasher64.
-type Hasher Hasher64
+type Hasher[T byteseq] Hasher64[T]
 
-// Hasher32 describes uint32 hash generation from given string.
-type Hasher32 interface {
-	Sum32(string) uint32
+// Hasher32 describes uint32 hash generator.
+type Hasher32[T byteseq] interface {
+	Sum32(T) uint32
 }
 
-// Hasher64 describes uint64 hash generation from given string.
-type Hasher64 interface {
-	Sum64(string) uint64
+// Hasher64 describes uint64 hash generator.
+type Hasher64[T byteseq] interface {
+	Sum64(T) uint64
 }
 
-// BHasher is a shorthand alias of BHasher64.
-type BHasher BHasher64
-
-// BHasher32 describes uint32 hash generation from given bytes.
-type BHasher32 interface {
-	Sum32([]byte) uint32
+// Hasher_x86_128 describes uint128([4]uint32) hash generator.
+type Hasher_x86_128[T byteseq] interface {
+	Sum128(T) [4]uint32
 }
 
-// BHasher64 describes uint64 hash generation from given bytes.
-type BHasher64 interface {
-	Sum64([]byte) uint64
+type Hasher_x64_128[T byteseq] interface {
+	Sum128(T) [2]uint64
 }

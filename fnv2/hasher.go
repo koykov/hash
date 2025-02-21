@@ -4,30 +4,36 @@ const (
 	longStrThreshold = 256
 )
 
-type Hasher[T byteseq] struct{}
+type Hasher32[T byteseq] struct{}
 
-func (h Hasher[T]) Sum32(s T) uint32 {
+func (h Hasher32[T]) Sum32(s T) uint32 {
 	if len(s) > longStrThreshold {
 		return Hash32Long(s)
 	}
 	return Hash32(s)
 }
 
-func (h Hasher[T]) Sum32a(s T) uint32 {
-	if len(s) > longStrThreshold {
-		return Hash32aLong(s)
-	}
-	return Hash32a(s)
-}
+type Hasher64[T byteseq] struct{}
 
-func (h Hasher[T]) Sum64(s T) uint64 {
+func (h Hasher64[T]) Sum64(s T) uint64 {
 	if len(s) > longStrThreshold {
 		return Hash64Long(s)
 	}
 	return Hash64(s)
 }
 
-func (h Hasher[T]) Sum64a(s T) uint64 {
+type Hasher32a[T byteseq] struct{}
+
+func (h Hasher32a[T]) Sum32(s T) uint32 {
+	if len(s) > longStrThreshold {
+		return Hash32aLong(s)
+	}
+	return Hash32a(s)
+}
+
+type Hasher64a[T byteseq] struct{}
+
+func (h Hasher64a[T]) Sum64(s T) uint64 {
 	if len(s) > longStrThreshold {
 		return Hash64aLong(s)
 	}
