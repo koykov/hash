@@ -1,6 +1,11 @@
-# Fast FNV-1 hash
+# ~~Fast FNV-1 hash~~
 
 It's a collection of fast and alloc-free FNV-1 hash calculation.
+
+### Caution!
+
+> Package is abandoned, use [fnv2](/fnv2) instead.
+> This package kept for backward compatibility in other packages.
 
 FNV-1 32 benchmark:
 ```
