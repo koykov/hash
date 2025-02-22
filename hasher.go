@@ -25,3 +25,7 @@ type Hasher_x86_128[T byteseq] interface {
 type Hasher_x64_128[T byteseq] interface {
 	Sum128(T) [2]uint64
 }
+
+type Hasher_x64_256[T byteseq] interface {
+	Sum256(T) [4]uint64
+}
