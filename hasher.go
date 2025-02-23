@@ -17,15 +17,17 @@ type Hasher64[T byteseq] interface {
 	Sum64(T) uint64
 }
 
-// Hasher_x86_128 describes uint128([4]uint32) hash generator.
-type Hasher_x86_128[T byteseq] interface {
+// Hasher128x86 describes uint128([4]uint32) hash generator.
+type Hasher128x86[T byteseq] interface {
 	Sum128(T) [4]uint32
 }
 
-type Hasher_x64_128[T byteseq] interface {
+// Hasher128x64 describes uint128([2]uint64) hash generator.
+type Hasher128x64[T byteseq] interface {
 	Sum128(T) [2]uint64
 }
 
-type Hasher_x64_256[T byteseq] interface {
+// Hasher256x64 describes uint256([4]uint64) hash generator.
+type Hasher256x64[T byteseq] interface {
 	Sum256(T) [4]uint64
 }
