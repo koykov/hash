@@ -8,18 +8,18 @@ func (h Hasher64[T]) Sum64(p T) uint64 {
 	return Hash64(p, h.Key)
 }
 
-type Hasher128 struct {
+type Hasher128x64 struct {
 	Key Key
 }
 
-func (h Hasher128) Sum128(p []byte) [2]uint64 {
+func (h Hasher128x64) Sum128(p []byte) [2]uint64 {
 	return Hash128(p, h.Key)
 }
 
-type Hasher256 struct {
+type Hasher256x64 struct {
 	Key Key
 }
 
-func (h Hasher256) Sum256(p []byte) [4]uint64 {
+func (h Hasher256x64) Sum256(p []byte) [4]uint64 {
 	return Hash256(p, h.Key)
 }
