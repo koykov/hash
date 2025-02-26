@@ -48,7 +48,7 @@ func Hash[T byteseq](p T, seed uint32) uint32 {
 	return fmix32(h1 ^ ul)
 }
 
-func Hash_x86_128[T byteseq](p T, seed uint32) (h [4]uint32) {
+func Hash128x86[T byteseq](p T, seed uint32) (h [4]uint32) {
 	const (
 		c1 = 0x239b961b
 		c2 = 0xab0e9789
@@ -182,7 +182,7 @@ func Hash_x86_128[T byteseq](p T, seed uint32) (h [4]uint32) {
 	return
 }
 
-func Hash_x64_128[T byteseq](p T, seed uint64) (h [2]uint64) {
+func Hash128x64[T byteseq](p T, seed uint64) (h [2]uint64) {
 	const (
 		c1 = 0x87c37b91114253d5
 		c2 = 0x4cf5ad432745937f
