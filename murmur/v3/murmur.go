@@ -1,4 +1,4 @@
-package v3
+package murmur
 
 type byteseq interface {
 	~[]byte | ~string
