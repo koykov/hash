@@ -45,7 +45,7 @@ func Hash[T byteseq](p T, seed uint32) uint32 {
 		h1 ^= k1
 	}
 
-	return fmix32(h1 ^ ul)
+	return Fmix32(h1 ^ ul)
 }
 
 func Hash128x86[T byteseq](p T, seed uint32) (h [4]uint32) {
@@ -170,7 +170,7 @@ func Hash128x86[T byteseq](p T, seed uint32) (h [4]uint32) {
 	h[2] += h[0]
 	h[3] += h[0]
 
-	h[0], h[1], h[2], h[3] = fmix32(h[0]), fmix32(h[1]), fmix32(h[2]), fmix32(h[3])
+	h[0], h[1], h[2], h[3] = Fmix32(h[0]), Fmix32(h[1]), Fmix32(h[2]), Fmix32(h[3])
 
 	h[0] += h[1]
 	h[0] += h[2]
@@ -274,7 +274,7 @@ func Hash128x64[T byteseq](p T, seed uint64) (h [2]uint64) {
 	h[0] += h[1]
 	h[1] += h[0]
 
-	h[0], h[1] = fmix64(h[0]), fmix64(h[1])
+	h[0], h[1] = Fmix64(h[0]), Fmix64(h[1])
 
 	h[0] += h[1]
 	h[1] += h[0]
@@ -290,24 +290,6 @@ func rotl(x uint32, r int8) (z uint32) {
 func rotl64(x uint64, r int8) (z uint64) {
 	s := uint8(r) & (64 - 1)
 	return (x << s) | (x >> (64 - s))
-}
-
-func fmix32(h uint32) uint32 {
-	h ^= h >> 16
-	h *= 0x85ebca6b
-	h ^= h >> 13
-	h *= 0xc2b2ae35
-	h ^= h >> 16
-	return h
-}
-
-func fmix64(h uint64) uint64 {
-	h ^= h >> 33
-	h *= 0xff51afd7ed558ccd
-	h ^= h >> 33
-	h *= 0xc4ceb9fe1a85ec53
-	h ^= h >> 33
-	return h
 }
 
 func leu32[T byteseq](b T) uint32 {
