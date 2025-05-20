@@ -21,6 +21,7 @@ var primes = [5]uint64{prime0, prime1, prime2, prime3, prime4}
 func Hash64[T byteseq](p T) (h uint64) {
 	ul := uint64(len(p))
 	if ul >= 32 {
+		_ = p[31]
 		v0, v1, v2, v3 := primes[0]+prime1, prime1, uint64(0), -primes[0]
 		for len(p) >= 32 {
 			v0, v1, v2, v3, p = rnd(v0, leu64(p[0:8])), rnd(v1, leu64(p[8:16])), rnd(v2, leu64(p[16:24])), rnd(v3, leu64(p[24:32])), p[32:]
@@ -48,10 +49,8 @@ func Hash64[T byteseq](p T) (h uint64) {
 		h = rotl(h, 11) * prime0
 	}
 
-	h ^= h >> 33
-	h *= prime1
-	h ^= h >> 29
-	h *= prime2
+	h = (h ^ (h >> 33)) * prime1
+	h = (h ^ (h >> 29)) * prime2
 	h ^= h >> 32
 
 	return
