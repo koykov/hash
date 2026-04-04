@@ -1,11 +1,17 @@
 package xxhash
 
-import "testing"
+import (
+	"math"
+	"strconv"
+	"testing"
+)
 
-var stages = []struct {
+type stage struct {
 	data   string
 	hash64 uint64
-}{
+}
+
+var stages = []stage{
 	{
 		data:   "foo",
 		hash64: 3728699739546630719,
@@ -23,24 +29,37 @@ var stages = []struct {
 		hash64: 7536621141780310046,
 	},
 }
+var bstages []stage
+
+func init() {
+	sizes := []int{4, 16, 100, 4000, 10000000}
+	for _, size := range sizes {
+		b := make([]byte, size)
+		for i := 0; i < size; i++ {
+			b[i] = byte(i % math.MaxUint8)
+		}
+		bstages = append(bstages, stage{data: string(b)})
+	}
+}
 
 func TestHash64(t *testing.T) {
-	for _, stage := range stages {
-		hash := Hash64(stage.data)
-		if hash != stage.hash64 {
-			t.Errorf("Hash64(%s) = %d, want %d", stage.data, hash, stage.hash64)
+	for _, stg := range stages {
+		hash := Hash64(stg.data)
+		if hash != stg.hash64 {
+			t.Errorf("Hash64(%s) = %d, want %d", stg.data, hash, stg.hash64)
 		}
 	}
 }
 
 func BenchmarkHash64(b *testing.B) {
-	for i := 0; i < len(stages); i++ {
-		stage := &stages[i]
-		b.Run("", func(b *testing.B) {
+	for i := 0; i < len(bstages); i++ {
+		stg := &bstages[i]
+		b.Run(strconv.Itoa(len(stg.data)), func(b *testing.B) {
+			b.SetBytes(int64(len(stg.data)))
 			b.ReportAllocs()
-			b.SetBytes(int64(len(stage.data)))
+			b.ResetTimer()
 			for j := 0; j < b.N; j++ {
-				Hash64(stage.data)
+				Hash64(stg.data)
 			}
 		})
 	}
